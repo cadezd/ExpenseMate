@@ -26,6 +26,19 @@
         <item name="android:fontFamily">@font/inter_bold</item>
     </style>
 
+    <style name="text_h4_white" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
+    </style>
+
+    <style name="text_h5_green" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
+    </style>
+
+
 
     <style name="text_label" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">12sp</item>

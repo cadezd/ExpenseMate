@@ -49,4 +49,12 @@
     <string name="month">Month</string>
     <string name="year">Year</string>
 
+    <!-- User profile -->
+    <string name="profile">Profile</string>
+    <string name="username">\@cadezd</string>
+    <string name="delete_account">Delete account</string>
+    <string name="delete_all_transactions">Delete all transactions</string>
+    <string name="logout">Logout</string>
+
+
 </resources>
