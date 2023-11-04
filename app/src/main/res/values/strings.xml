@@ -56,5 +56,11 @@
     <string name="delete_all_transactions">Delete all transactions</string>
     <string name="logout">Logout</string>
 
+    <!-- Statistics -->
+    <string name="statistics">Statistics</string>
+    <string name="top_spending">Top spending</string>
+    <string name="all">All</string>
+
+
 
 </resources>
