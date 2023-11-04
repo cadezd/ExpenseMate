@@ -29,4 +29,17 @@
     <string name="date_hint">Enter transaction date</string>
     <string name="image_label">Image</string>
 
+    <!-- Home page -->
+    <string name="greeting">Good afternoon</string>
+    <string name="full_name">David Čadež</string>
+    <string name="total_balance">Total balance</string>
+    <string name="total_balance_num">2,548.00€</string>
+    <string name="income">Income</string>
+    <string name="income_num">1,840.00€</string>
+    <string name="expenses">Expenses</string>
+    <string name="expenses_num">284.00€</string>
+    <string name="transaction_history">Transaction history</string>
+    <string name="see_all">See all</string>
+
+
 </resources>
