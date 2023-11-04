@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main"
+    tools:context=".TransactionActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.19" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.93" />
+
+    <ImageView
+        android:id="@+id/imgVBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="47dp"
+        app:layout_constraintBottom_toTopOf="@+id/glTop"
+        app:layout_constraintEnd_toStartOf="@+id/textView6"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeft"
+        app:srcCompat="@drawable/ic_back" />
+
+    <TextView
+        android:id="@+id/textView6"
+        style="@style/text_h4_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="@string/transaction"
+        app:layout_constraintBottom_toTopOf="@+id/glTop"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintStart_toStartOf="@+id/glLeft" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/placeholder"
+        android:elevation="22dp"
+        android:isScrollContainer="false"
+        app:layout_constraintBottom_toTopOf="@+id/glBottom"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintStart_toStartOf="@+id/glLeft"
+        app:layout_constraintTop_toTopOf="@+id/glTop">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView9"
+                style="@style/text_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/description_label" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                style="@style/text_input_layout"
+                android:layout_width="match_parent"
+                app:layout_constraintHorizontal_bias="0.0">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtInDescription"
+                    style="@style/text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/description_hint"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView10"
+                style="@style/text_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/amount_label" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout1"
+                style="@style/text_input_layout"
+                android:layout_width="match_parent"
+                app:layout_constraintHorizontal_bias="0.0">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtInAmount"
+                    style="@style/text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits="+-.0123456789"
+                    android:hint="@string/amount_hint"
+                    android:inputType="numberDecimal|numberSigned" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView11"
+                style="@style/text_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/date_label" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                style="@style/text_input_layout"
+                android:layout_width="match_parent"
+                app:layout_constraintHorizontal_bias="0.0">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtInDate"
+                    style="@style/text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableEnd="@drawable/ic_calendar"
+                    android:hint="@string/date_hint"
+                    android:inputType="date" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView12"
+                style="@style/text_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/image_label" />
+
+            <ImageView
+                android:id="@+id/imgVPicture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/image_view_border"
+                android:paddingTop="45dp"
+                android:paddingBottom="45dp"
+                app:srcCompat="@drawable/ic_image" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

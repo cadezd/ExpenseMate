@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main"
+    tools:context=".LoginActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.93" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/placeholder"
+        android:elevation="22dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/glBottom"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintStart_toStartOf="@+id/glLeft"
+        app:layout_constraintTop_toTopOf="@+id/glTop"
+        app:layout_constraintVertical_bias="0.503">
+
+        <TextView
+            android:id="@+id/textView8"
+            style="@style/text_h4_green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:textAlignment="center" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/textView9"
+            style="@style/text_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/username_label" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/text_input_layout"
+            android:layout_width="match_parent"
+            app:layout_constraintHorizontal_bias="0.0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInUsername"
+                style="@style/text_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/username_hint"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView10"
+            style="@style/text_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/password_label" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout1"
+            style="@style/text_input_layout"
+            android:layout_width="match_parent"
+            app:layout_constraintHorizontal_bias="0.0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInPassword"
+                style="@style/text_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogin"
+            style="@style/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/login" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtVRegister"
+        style="@style/text_p_light_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/dont_have_account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintStart_toStartOf="@+id/glLeft"
+        app:layout_constraintTop_toTopOf="@+id/glBottom"
+        app:layout_constraintVertical_bias="0.92" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

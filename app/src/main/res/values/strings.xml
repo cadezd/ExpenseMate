@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">ExpenseMate</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Register -->
+    <string name="full_name_label">Full name</string>
+    <string name="full_name_hint">Enter your full name</string>
+    <string name="username_label">Username</string>
+    <string name="username_hint">Enter your username</string>
+    <string name="password_label">Password</string>
+    <string name="password_hint">Enter your password</string>
+    <string name="confirm_password_label">Confirm Password</string>
+    <string name="confirm_password_hint">Enter your password again</string>
+    <string name="register">Register</string>
+    <string name="already_have_account"><font color="#666666">Already have an account? </font> <font color="#2C7D77"><b>Login</b></font></string>
+
+    <!-- Login -->
+    <string name="login">Login</string>
+    <string name="dont_have_account"><font color="#666666">Don\'t have an account? </font> <font color="#2C7D77"><b>Register</b></font></string>
+
+    <!-- Transaction -->
+    <string name="transaction">Transaction</string>
+    <string name="description_label">Description</string>
+    <string name="description_hint">Enter transaction description</string>
+    <string name="amount_label">Amount</string>
+    <string name="amount_hint">Enter transaction amount</string>
+    <string name="date_label">Date</string>
+    <string name="date_hint">Enter transaction date</string>
+    <string name="image_label">Image</string>
+
+</resources>
