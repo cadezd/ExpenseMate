@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        tools:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.08" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -21,21 +21,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        tools:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.95" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:layout_constraintGuide_percent="0.07" />
+        app:layout_constraintGuide_percent="0.07" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:layout_constraintGuide_percent="0.93" />
+        app:layout_constraintGuide_percent="0.93" />
 
     <TextView
         android:id="@+id/txtVGreeting"
@@ -58,7 +58,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
-        android:layout_height="187dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/placeholder_green"
         android:elevation="22dp"
@@ -85,6 +85,7 @@
             style="@style/text_h1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
             android:layout_weight="5"
             android:text="@string/total_balance_num" />
 
