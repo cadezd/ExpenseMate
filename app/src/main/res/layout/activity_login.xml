@@ -92,7 +92,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutPassword"
-            style="@style/text_input_layout"
+            style="@style/text_input_layout_password"
             android:layout_width="match_parent"
             app:layout_constraintHorizontal_bias="0.0">
 

@@ -98,6 +98,29 @@
         <item name="errorEnabled">true</item>
     </style>
 
+    <style name="text_input_layout_password" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/lightText</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+
+        <item name="hintEnabled">false</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="endIconTint">@color/lightText</item>
+        <item name="startIconTint">@color/lightText</item>
+        <item name="hintTextColor">@color/lightText</item>
+        <item name="endIconMode">password_toggle</item>
+        <item name="errorEnabled">true</item>
+    </style>
+
     <style name="text_input" parent="Widget.Material3.TextInputEditText.OutlinedBox">
         <item name="android:layout_height">48dp</item>
         <item name="android:paddingTop">3dp</item>
