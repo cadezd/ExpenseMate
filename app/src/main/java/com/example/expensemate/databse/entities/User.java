@@ -2,11 +2,17 @@ package com.example.expensemate.databse.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.expensemate.databse.converters.DateConverter;
 
 import java.util.Date;
 
-@Entity
+@Entity(indices = {@Index(value = {"username", "password"},
+        unique = true)})
+@TypeConverters(DateConverter.class)
 public class User {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -27,8 +33,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String fullName, String username, String password, Date dateCreated) {
-        this.id = id;
+    public User(String fullName, String username, String password, Date dateCreated) {
         this.fullName = fullName;
         this.username = username;
         this.password = password;
@@ -73,5 +78,16 @@ public class User {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", dateCreated=" + dateCreated +
+                '}';
     }
 }

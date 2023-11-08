@@ -40,6 +40,13 @@ public class Transaction {
     public Transaction() {
     }
 
+    public Transaction(String description, double amount, Date date, byte[] image) {
+        this.description = description;
+        this.amount = amount;
+        this.date = date;
+        this.image = image;
+    }
+
     public int getId() {
         return id;
     }

@@ -30,6 +30,10 @@ public class LoginActivity extends AppCompatActivity {
         txtInUsername = findViewById(R.id.txtInUsername);
         txtInPassword = findViewById(R.id.txtInPassword);
 
+        // TODO: remove test data
+        txtInUsername.setText("test1");
+        txtInPassword.setText("Test123_");
+
         btnLogin = findViewById(R.id.btnLogin);
 
         txtVRegister = findViewById(R.id.txtVRegister);

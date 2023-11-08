@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.example.expensemate"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.expensemate"
         minSdk = 25
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -29,9 +29,12 @@ android {
 }
 
 dependencies {
-    val room_version = "2.6.0"
-    implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
+    // add below dependency for using room.
+    implementation("androidx.room:room-runtime:2.2.5")
+    annotationProcessor("androidx.room:room-compiler:2.2.5")
+    // add below dependency for using lifecycle extensions for room.
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    annotationProcessor ("androidx.lifecycle:lifecycle-compiler:2.2.0")
 
     implementation("com.jjoe64:graphview:4.2.2")
 
