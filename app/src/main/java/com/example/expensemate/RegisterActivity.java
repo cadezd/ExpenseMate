@@ -19,6 +19,7 @@ import com.example.expensemate.databse.entities.UserWithTransactions;
 import com.example.expensemate.databse.repository.UserRepository;
 import com.example.expensemate.model.UserModel;
 import com.example.expensemate.util.Util;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Date;
@@ -172,5 +173,14 @@ public class RegisterActivity extends AppCompatActivity {
         // create user and insert it into database
         User user = new User(fullName, username, Util.getSHA512SecurePassword(password, username), new Date());
         userModel.insert(user);
+
+        // show success dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+        builder.setTitle("Success");
+        builder.setMessage("You have successfully registered");
+        builder.setPositiveButton("OK", (dialogInterface, i) -> {
+            finish();
+        });
+        builder.show();
     }
 }
