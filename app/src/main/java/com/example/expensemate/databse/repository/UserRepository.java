@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.example.expensemate.databse.connection.MyDatabase;
 import com.example.expensemate.databse.dao.Dao;
 import com.example.expensemate.databse.entities.User;
+import com.example.expensemate.databse.entities.UserWithTransactions;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -50,9 +51,18 @@ public class UserRepository {
         return usernameTaken;
     }
 
-    public LiveData<User> findUserByUsernameAndPassword(String username, String password) {
-        return dao.findUserByUsernameAndPassword(username, password);
+    public User findUserByUsernameAndPassword(String username, String password) throws ExecutionException, InterruptedException {
+        User user = Executors.newSingleThreadExecutor().submit(() -> {
+            return dao.findUserByUsernameAndPassword(username, password);
+        }).get();
+
+        return user;
     }
+
+    public LiveData<UserWithTransactions> getUserTransactions(String username, String password) {
+        return dao.getUserTransactions(username, password);
+    }
+
 
 }
 

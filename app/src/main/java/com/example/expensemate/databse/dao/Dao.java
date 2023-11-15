@@ -29,14 +29,17 @@ public interface Dao {
     void updateUser(User user);
 
     @Query("SELECT * FROM User WHERE User.username = :username AND User.password = :password")
-    LiveData<User> findUserByUsernameAndPassword(String username, String password);
+    User findUserByUsernameAndPassword(String username, String password);
 
     @Query("SELECT EXISTS( SELECT * FROM User WHERE User.username = :username )")
     Boolean isUsernameTaken(String username);
 
+    @Query("SELECT * FROM User WHERE User.username = :username AND User.password = :password")
+    LiveData<UserWithTransactions> getUserTransactions(String username, String password);
 
 
-    /*TRANSACTION
+
+    /*TRANSACTION*/
 
     @Insert
     void insertTransaction(Transaction transaction);
@@ -52,11 +55,4 @@ public interface Dao {
 
     @Query("SELECT * FROM [Transaction] WHERE id = :id")
     Transaction getTransaction(int id);
-
-    /* USER WITH TRANSACTIONS
-
-    @Query("SELECT * FROM User JOIN [Transaction] ON User.id = [Transaction].userId WHERE User.id = :userId")
-    LiveData<UserWithTransactions> getUserTransactions(int userId);
-
-    */
 }

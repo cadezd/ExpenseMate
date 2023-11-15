@@ -9,12 +9,13 @@ import androidx.room.TypeConverters;
 
 import com.example.expensemate.databse.converters.DateConverter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(indices = {@Index(value = {"username", "password"},
         unique = true)})
 @TypeConverters(DateConverter.class)
-public class User {
+public class User implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;

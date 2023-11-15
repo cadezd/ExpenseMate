@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.expensemate.databse.entities.User;
+import com.example.expensemate.databse.entities.UserWithTransactions;
 import com.example.expensemate.databse.repository.UserRepository;
 
 import java.util.concurrent.ExecutionException;
@@ -37,11 +38,15 @@ public class UserModel extends AndroidViewModel {
         repository.deleteUser(user);
     }
 
-    public LiveData<User> findUserByUsernameAndPassword(String username, String password) {
+    public User findUserByUsernameAndPassword(String username, String password) throws ExecutionException, InterruptedException {
         return repository.findUserByUsernameAndPassword(username, password);
     }
 
     public Boolean isUsernameTaken(String username) throws ExecutionException, InterruptedException {
         return repository.isUsernameTaken(username);
+    }
+
+    public LiveData<UserWithTransactions> getUserTransactions(String username, String password) {
+        return repository.getUserTransactions(username, password);
     }
 }
