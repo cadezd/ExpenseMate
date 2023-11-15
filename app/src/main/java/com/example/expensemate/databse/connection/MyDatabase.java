@@ -25,7 +25,6 @@ public abstract class MyDatabase extends RoomDatabase {
                     INSTANCE = Room
                             .databaseBuilder(context.getApplicationContext(), MyDatabase.class, "EXPENSE_MATE_DB")
                             .fallbackToDestructiveMigration()
-                            .allowMainThreadQueries()
                             .build();
                 }
             }

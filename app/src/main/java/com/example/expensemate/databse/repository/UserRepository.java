@@ -8,6 +8,7 @@ import com.example.expensemate.databse.connection.MyDatabase;
 import com.example.expensemate.databse.dao.Dao;
 import com.example.expensemate.databse.entities.User;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -41,13 +42,18 @@ public class UserRepository {
         });
     }
 
+    public Boolean isUsernameTaken(String username) throws ExecutionException, InterruptedException {
+        Boolean usernameTaken = Executors.newSingleThreadExecutor().submit(() -> {
+            return dao.isUsernameTaken(username);
+        }).get();
+
+        return usernameTaken;
+    }
+
     public LiveData<User> findUserByUsernameAndPassword(String username, String password) {
         return dao.findUserByUsernameAndPassword(username, password);
     }
 
-    public Boolean isUsernameTaken(String username) {
-        return dao.isUsernameTaken(username);
-    }
 }
 
 

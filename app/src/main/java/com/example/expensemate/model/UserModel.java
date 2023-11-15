@@ -41,7 +41,7 @@ public class UserModel extends AndroidViewModel {
         return repository.findUserByUsernameAndPassword(username, password);
     }
 
-    public Boolean isUsernameTaken(String username) {
+    public Boolean isUsernameTaken(String username) throws ExecutionException, InterruptedException {
         return repository.isUsernameTaken(username);
     }
 }

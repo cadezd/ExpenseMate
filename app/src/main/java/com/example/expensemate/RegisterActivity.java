@@ -1,25 +1,16 @@
 package com.example.expensemate;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-
-import android.content.Intent;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.expensemate.databse.connection.MyDatabase;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.expensemate.databse.entities.User;
-import com.example.expensemate.databse.entities.UserWithTransactions;
-import com.example.expensemate.databse.repository.UserRepository;
 import com.example.expensemate.model.UserModel;
 import com.example.expensemate.util.Util;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Date;
@@ -165,7 +156,15 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         // check if username already exists
-        if (userModel.isUsernameTaken(username)) {
+        Boolean isUsernameTaken = false;
+        try {
+            isUsernameTaken = userModel.isUsernameTaken(username);
+        } catch (ExecutionException | InterruptedException e) {
+            showErrorMessage();
+            e.printStackTrace();
+        }
+
+        if (isUsernameTaken) {
             textInputLayoutUsername.setError("Username already exists");
             return;
         }
@@ -173,14 +172,27 @@ public class RegisterActivity extends AppCompatActivity {
         // create user and insert it into database
         User user = new User(fullName, username, Util.getSHA512SecurePassword(password, username), new Date());
         userModel.insert(user);
+        showSuccessMessage();
+    }
 
+
+    private void showSuccessMessage() {
         // show success dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
         builder.setTitle("Success");
-        builder.setMessage("You have successfully registered");
+        builder.setMessage("You have successfully registered.");
         builder.setPositiveButton("OK", (dialogInterface, i) -> {
             finish();
         });
+        builder.show();
+    }
+
+    private void showErrorMessage() {
+        // show error dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+        builder.setTitle("Error");
+        builder.setMessage("Something went wrong, please try again.");
+        builder.setPositiveButton("OK", null);
         builder.show();
     }
 }
