@@ -3,11 +3,13 @@ package com.example.expensemate.databse.entities;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.example.expensemate.databse.converters.DateConverter;
 
+import java.util.Arrays;
 import java.util.Date;
 
 @Entity(foreignKeys = @ForeignKey(entity = User.class,
@@ -93,5 +95,18 @@ public class Transaction {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    @Ignore
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", description='" + description + '\'' +
+                ", amount=" + amount +
+                ", date=" + date +
+                ", image=" + Arrays.toString(image) +
+                '}';
     }
 }
