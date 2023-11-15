@@ -16,6 +16,7 @@ import java.util.List;
 @androidx.room.Dao
 public interface Dao {
 
+
     /*USER*/
 
     @androidx.room.Transaction
@@ -38,17 +39,13 @@ public interface Dao {
     LiveData<UserWithTransactions> getUserTransactions(String username, String password);
 
 
-
     /*TRANSACTION*/
 
     @Insert
     void insertTransaction(Transaction transaction);
 
-    @Insert
-    void insertTransactions(List<Transaction> transactions);
-
     @Update
-    void updateTransactions(Transaction transaction);
+    void updateTransaction(Transaction transaction);
 
     @Delete
     void deleteTransaction(Transaction transaction);
