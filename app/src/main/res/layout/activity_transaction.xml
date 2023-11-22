@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glLeft"
@@ -86,13 +86,14 @@
                 android:id="@+id/textInputLayoutFullName"
                 style="@style/text_input_layout"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintHorizontal_bias="0.0">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtInDescription"
                     style="@style/text_input"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:hint="@string/description_hint"
                     android:inputType="text" />
 
@@ -109,13 +110,14 @@
                 android:id="@+id/textInputLayoutUsername"
                 style="@style/text_input_layout"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintHorizontal_bias="0.0">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtInAmount"
                     style="@style/text_input"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:digits="+-.0123456789"
                     android:hint="@string/amount_hint"
                     android:inputType="numberDecimal|numberSigned" />
@@ -133,13 +135,14 @@
                 android:id="@+id/textInputLayoutPassword"
                 style="@style/text_input_layout"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintHorizontal_bias="0.0">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtInDate"
                     style="@style/text_input"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:drawableEnd="@drawable/ic_calendar"
                     android:hint="@string/date_hint"
                     android:inputType="date" />
@@ -165,6 +168,14 @@
                 android:paddingTop="45dp"
                 android:paddingBottom="45dp"
                 app:srcCompat="@drawable/ic_image" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSave"
+                style="@style/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/save" />
 
         </LinearLayout>
     </ScrollView>

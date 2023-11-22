@@ -9,6 +9,7 @@ import androidx.room.TypeConverters;
 
 import com.example.expensemate.databse.converters.DateConverter;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -17,7 +18,7 @@ import java.util.Date;
         childColumns = "userId",
         onDelete = ForeignKey.CASCADE))
 @TypeConverters(DateConverter.class)
-public class Transaction {
+public class Transaction implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

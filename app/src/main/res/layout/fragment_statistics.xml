@@ -94,7 +94,7 @@
             android:text="@string/month" />
 
         <RadioButton
-            android:id="@+id/rbYear"
+            android:id="@+id/rbAll"
             style="@style/radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
