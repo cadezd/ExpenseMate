@@ -39,7 +39,7 @@
     <string name="income_num">1,840.00€</string>
     <string name="expenses">Expenses</string>
     <string name="expenses_num">284.00€</string>
-    <string name="transaction_history">Transaction history</string>
+    <string name="todays_transactions">Today\'s transactions</string>
     <string name="see_all">See all</string>
 
     <!-- History -->
