@@ -87,7 +87,7 @@ public class HomePageFragment extends Fragment {
         });
 
         rvTransactionHistory.setAdapter(adapter);
-        transactionModel.getUserTransactions().observe(getViewLifecycleOwner(), transactions -> {
+        transactionModel.getTodaysUserTransactions().observe(getViewLifecycleOwner(), transactions -> {
             adapter.submitList(transactions);
         });
 
