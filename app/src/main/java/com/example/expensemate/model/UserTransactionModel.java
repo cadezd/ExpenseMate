@@ -20,6 +20,9 @@ public class UserTransactionModel extends AndroidViewModel {
     private LiveData<Integer> userIncome;
     private LiveData<Integer> userExpense;
     private LiveData<List<UserTransaction>> userTransactions;
+    private LiveData<List<UserTransaction>> todaysUserTransactions;
+    private LiveData<List<UserTransaction>> thisWeeksUserTransactions;
+    private LiveData<List<UserTransaction>> thisMonthsUserTransactions;
 
     public UserTransactionModel(@NonNull Application application, int userId) {
         super(application);
@@ -29,6 +32,9 @@ public class UserTransactionModel extends AndroidViewModel {
         userIncome = repository.getUserIncome(this.userId);
         userExpense = repository.getUserExpense(this.userId);
         userTransactions = repository.getUserTransactions(this.userId);
+        todaysUserTransactions = repository.getTodaysUserTransactions(this.userId, new java.util.Date().getTime());
+        thisWeeksUserTransactions = repository.getThisWeeksUserTransactions(this.userId, new java.util.Date().getTime());
+        thisMonthsUserTransactions = repository.getThisMonthsUserTransactions(this.userId, new java.util.Date().getTime());
     }
 
     public void insertTransaction(UserTransaction transaction) {
@@ -61,5 +67,17 @@ public class UserTransactionModel extends AndroidViewModel {
 
     public LiveData<Integer> getUserExpense() {
         return userExpense;
+    }
+
+    public LiveData<List<UserTransaction>> getTodaysUserTransactions() {
+        return todaysUserTransactions;
+    }
+
+    public LiveData<List<UserTransaction>> getThisWeeksUserTransactions() {
+        return thisWeeksUserTransactions;
+    }
+
+    public LiveData<List<UserTransaction>> getThisMonthsUserTransactions() {
+        return thisMonthsUserTransactions;
     }
 }

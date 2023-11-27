@@ -50,6 +50,15 @@ public interface Dao {
     @Query("SELECT * FROM UserTransaction WHERE id = :id")
     UserTransaction getTransaction(int id);
 
+    @Query("SELECT * FROM UserTransaction WHERE userId = :userId AND date / (1000 * 60 * 60 * 24)= (:date / (1000 * 60 * 60 * 24)) ORDER BY date DESC")
+    LiveData<List<UserTransaction>> getTodaysUserTransactions(int userId, long date);
+
+    @Query("SELECT * FROM UserTransaction WHERE userId = :userId AND date / (1000 * 60 * 60 * 24) BETWEEN (:date / (1000 * 60 * 60 * 24)) - (:date / (1000 * 60 * 60 * 24)) % 7 AND (:date / (1000 * 60 * 60 * 24)) + 6 - (:date / (1000 * 60 * 60 * 24)) % 7 ORDER BY date DESC")
+    LiveData<List<UserTransaction>> getThisWeeksUserTransactions(int userId, long date);
+
+    @Query("SELECT * FROM UserTransaction WHERE userId = :userId AND date / (1000 * 60 * 60 * 24) BETWEEN (:date / (1000 * 60 * 60 * 24)) - (:date / (1000 * 60 * 60 * 24)) % 30 AND (:date / (1000 * 60 * 60 * 24)) + 29 - (:date / (1000 * 60 * 60 * 24)) % 30 ORDER BY date DESC")
+    LiveData<List<UserTransaction>> getThisMonthsUserTransactions(int userId, long date);
+
     @Query("SELECT * FROM UserTransaction WHERE userId = :userId ORDER BY date DESC")
     LiveData<List<UserTransaction>> getUserTransactions(int userId);
 

@@ -67,4 +67,15 @@ public class UserTransactionRepository {
         return dao.getUserExpense(userId);
     }
 
+    public LiveData<List<UserTransaction>> getTodaysUserTransactions(int userId, long date) {
+        return dao.getTodaysUserTransactions(userId, date);
+    }
+
+    public LiveData<List<UserTransaction>> getThisWeeksUserTransactions(int userId, long date) {
+        return dao.getThisWeeksUserTransactions(userId, date);
+    }
+
+    public LiveData<List<UserTransaction>> getThisMonthsUserTransactions(int userId, long date) {
+        return dao.getThisMonthsUserTransactions(userId, date);
+    }
 }
