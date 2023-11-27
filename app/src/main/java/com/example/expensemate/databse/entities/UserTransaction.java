@@ -18,7 +18,7 @@ import java.util.Date;
         childColumns = "userId",
         onDelete = ForeignKey.CASCADE))
 @TypeConverters(DateConverter.class)
-public class Transaction implements Serializable {
+public class UserTransaction implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -40,10 +40,11 @@ public class Transaction implements Serializable {
     private byte[] image;
 
 
-    public Transaction() {
+    public UserTransaction() {
     }
 
-    public Transaction(String description, double amount, Date date, byte[] image) {
+    public UserTransaction(int userId, String description, double amount, Date date, byte[] image) {
+        this.userId = userId;
         this.description = description;
         this.amount = amount;
         this.date = date;

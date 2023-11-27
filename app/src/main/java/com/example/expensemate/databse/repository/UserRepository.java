@@ -58,12 +58,6 @@ public class UserRepository {
 
         return user;
     }
-
-    public LiveData<UserWithTransactions> getUserTransactions(String username, String password) {
-        return dao.getUserTransactions(username, password);
-    }
-
-
 }
 
 

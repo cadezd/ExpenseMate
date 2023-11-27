@@ -8,10 +8,10 @@ import androidx.room.RoomDatabase;
 
 import com.example.expensemate.databse.dao.Dao;
 import com.example.expensemate.databse.entities.User;
-import com.example.expensemate.databse.entities.Transaction;
+import com.example.expensemate.databse.entities.UserTransaction;
 
 // START source: https://www.youtube.com/watch?v=qO56SL856xc&list=PLdHg5T0SNpN3CMNtsd5KGaiBtzhTGIwtC
-@Database(entities = {User.class, Transaction.class}, version = 2)
+@Database(entities = {User.class, UserTransaction.class}, version = 3)
 public abstract class MyDatabase extends RoomDatabase {
 
     public abstract Dao dao();

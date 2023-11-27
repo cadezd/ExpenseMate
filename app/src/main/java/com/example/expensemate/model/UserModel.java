@@ -45,8 +45,4 @@ public class UserModel extends AndroidViewModel {
     public Boolean isUsernameTaken(String username) throws ExecutionException, InterruptedException {
         return repository.isUsernameTaken(username);
     }
-
-    public LiveData<UserWithTransactions> getUserTransactions(String username, String password) {
-        return repository.getUserTransactions(username, password);
-    }
 }

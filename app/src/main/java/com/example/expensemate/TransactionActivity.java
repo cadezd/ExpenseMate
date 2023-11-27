@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.expensemate.constants.Constants;
-import com.example.expensemate.databse.entities.Transaction;
+import com.example.expensemate.databse.entities.UserTransaction;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
@@ -64,7 +64,7 @@ public class TransactionActivity extends AppCompatActivity {
 
 
             // Create new transaction
-            Transaction transaction = new Transaction(description, amount, date, imageInByte);
+            UserTransaction transaction = new UserTransaction(1, description, amount, date, imageInByte);
 
             // Send transaction to main activity
             Log.d("TEST", "sending data to main activity");

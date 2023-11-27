@@ -1,7 +1,6 @@
 package com.example.expensemate.databse.entities;
 
 import androidx.room.Embedded;
-import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Relation;
 
@@ -12,13 +11,13 @@ public class UserWithTransactions {
     @Embedded
     private User user;
     @Relation(
-            entity = Transaction.class,
+            entity = UserTransaction.class,
             parentColumn = "id",
             entityColumn = "userId"
     )
-    private List<Transaction> transactions;
+    private List<UserTransaction> transactions;
 
-    public UserWithTransactions(User user, List<Transaction> transactions) {
+    public UserWithTransactions(User user, List<UserTransaction> transactions) {
         this.user = user;
         this.transactions = transactions;
     }
@@ -31,11 +30,11 @@ public class UserWithTransactions {
         this.user = user;
     }
 
-    public List<Transaction> getTransactions() {
+    public List<UserTransaction> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(List<Transaction> transactions) {
+    public void setTransactions(List<UserTransaction> transactions) {
         this.transactions = transactions;
     }
 

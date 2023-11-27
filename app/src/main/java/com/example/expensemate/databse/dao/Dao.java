@@ -7,8 +7,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.expensemate.databse.entities.Transaction;
 import com.example.expensemate.databse.entities.User;
+import com.example.expensemate.databse.entities.UserTransaction;
 import com.example.expensemate.databse.entities.UserWithTransactions;
 
 import java.util.List;
@@ -35,21 +35,30 @@ public interface Dao {
     @Query("SELECT EXISTS( SELECT * FROM User WHERE User.username = :username )")
     Boolean isUsernameTaken(String username);
 
-    @Query("SELECT * FROM User WHERE User.username = :username AND User.password = :password")
-    LiveData<UserWithTransactions> getUserTransactions(String username, String password);
-
 
     /*TRANSACTION*/
 
     @Insert
-    void insertTransaction(Transaction transaction);
+    void insertTransaction(UserTransaction transaction);
 
     @Update
-    void updateTransaction(Transaction transaction);
+    void updateTransaction(UserTransaction transaction);
 
     @Delete
-    void deleteTransaction(Transaction transaction);
+    void deleteTransaction(UserTransaction transaction);
 
-    @Query("SELECT * FROM [Transaction] WHERE id = :id")
-    Transaction getTransaction(int id);
+    @Query("SELECT * FROM UserTransaction WHERE id = :id")
+    UserTransaction getTransaction(int id);
+
+    @Query("SELECT * FROM UserTransaction WHERE userId = :userId ORDER BY date DESC")
+    LiveData<List<UserTransaction>> getUserTransactions(int userId);
+
+    @Query("SELECT SUM(amount) FROM UserTransaction WHERE UserTransaction.userId = :userId")
+    LiveData<Integer> getUserBalance(int userId);
+
+    @Query("SELECT SUM(amount) FROM UserTransaction WHERE UserTransaction.userId = :userId AND UserTransaction.amount >= 0")
+    LiveData<Integer> getUserIncome(int userId);
+
+    @Query("SELECT SUM(amount) * -1 FROM UserTransaction WHERE UserTransaction.userId = :userId AND UserTransaction.amount < 0")
+    LiveData<Integer> getUserExpense(int userId);
 }
