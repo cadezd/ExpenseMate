@@ -51,8 +51,6 @@ public class HomePageFragment extends Fragment {
         // Creating user model
         transactionModel = new UserTransactionModel(getActivity().getApplication(), user.getId());
 
-        transactionModel.insertTransaction(new UserTransaction(user.getId(), "Test", 120, new Date(), null));
-        transactionModel.insertTransaction(new UserTransaction(user.getId(), "Test", -40, new Date(), null));
 
         // Creating transaction view adapter
         adapter = new TransactionViewAdapter();

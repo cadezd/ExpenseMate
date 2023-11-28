@@ -59,7 +59,7 @@ public class TransactionViewAdapter extends ListAdapter<UserTransaction, Transac
         // Displaying transaction amount and setting color based on the amount
         int color = (transaction.getAmount() > 0) ? R.color.green : R.color.red;
         holder.txtVAmount.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), color));
-        holder.txtVAmount.setText(String.valueOf(transaction.getAmount()));
+        holder.txtVAmount.setText(String.valueOf(transaction.getAmount()) + "€");
     }
 
     public class TransactionViewHolder extends RecyclerView.ViewHolder {

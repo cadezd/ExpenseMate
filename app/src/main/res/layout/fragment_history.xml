@@ -56,11 +56,10 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7">
 
         <AutoCompleteTextView
-            android:id="@+id/actxtVCountry"
+            android:id="@+id/actxtVTransactionType"
             style="@style/combo_box_input"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/expense" />
+            android:layout_height="match_parent" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
