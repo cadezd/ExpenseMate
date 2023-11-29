@@ -2,12 +2,9 @@ package com.example.expensemate.databse.repository;
 
 import android.app.Application;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.expensemate.databse.connection.MyDatabase;
 import com.example.expensemate.databse.dao.Dao;
 import com.example.expensemate.databse.entities.User;
-import com.example.expensemate.databse.entities.UserWithTransactions;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;

@@ -7,6 +7,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.expensemate.databse.entities.UserTransaction;
+import com.example.expensemate.databse.queryResults.DailyAnalysis;
+import com.example.expensemate.databse.queryResults.MonthlyAnalysis;
+import com.example.expensemate.databse.queryResults.WeeklyAnalysis;
+import com.example.expensemate.databse.queryResults.YearlyAnalysis;
 import com.example.expensemate.databse.repository.UserTransactionRepository;
 
 import java.util.List;
@@ -23,6 +27,10 @@ public class UserTransactionModel extends AndroidViewModel {
     private LiveData<List<UserTransaction>> todaysUserTransactions;
     private LiveData<List<UserTransaction>> thisWeeksUserTransactions;
     private LiveData<List<UserTransaction>> thisMonthsUserTransactions;
+    private LiveData<List<DailyAnalysis>> weeklyIncomeAndExpenses;
+    private LiveData<List<WeeklyAnalysis>> monthlyIncomeAndExpenses;
+    private LiveData<List<MonthlyAnalysis>> yearlyIncomeAndExpenses;
+    private LiveData<List<YearlyAnalysis>> decadeIncomeAndExpenses;
 
     public UserTransactionModel(@NonNull Application application, int userId) {
         super(application);
@@ -35,6 +43,10 @@ public class UserTransactionModel extends AndroidViewModel {
         todaysUserTransactions = repository.getTodaysUserTransactions(this.userId, new java.util.Date().getTime());
         thisWeeksUserTransactions = repository.getThisWeeksUserTransactions(this.userId, new java.util.Date().getTime());
         thisMonthsUserTransactions = repository.getThisMonthsUserTransactions(this.userId, new java.util.Date().getTime());
+        weeklyIncomeAndExpenses = repository.getWeeklyIncomeAndExpenses(this.userId, new java.util.Date().getTime());
+        monthlyIncomeAndExpenses = repository.getMonthlyIncomeAndExpenses(this.userId, new java.util.Date().getTime());
+        yearlyIncomeAndExpenses = repository.getYearlyIncomeAndExpenses(this.userId, new java.util.Date().getTime());
+        decadeIncomeAndExpenses = repository.getDecadeIncomeAndExpenses(this.userId, new java.util.Date().getTime());
     }
 
     public void insertTransaction(UserTransaction transaction) {
@@ -79,5 +91,21 @@ public class UserTransactionModel extends AndroidViewModel {
 
     public LiveData<List<UserTransaction>> getThisMonthsUserTransactions() {
         return thisMonthsUserTransactions;
+    }
+
+    public LiveData<List<DailyAnalysis>> getWeeklyIncomeAndExpenses() {
+        return weeklyIncomeAndExpenses;
+    }
+
+    public LiveData<List<WeeklyAnalysis>> getMonthlyIncomeAndExpenses() {
+        return monthlyIncomeAndExpenses;
+    }
+
+    public LiveData<List<MonthlyAnalysis>> getYearlyIncomeAndExpenses() {
+        return yearlyIncomeAndExpenses;
+    }
+
+    public LiveData<List<YearlyAnalysis>> getDecadeIncomeAndExpenses() {
+        return decadeIncomeAndExpenses;
     }
 }

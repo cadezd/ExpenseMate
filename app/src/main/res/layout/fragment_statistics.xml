@@ -79,7 +79,7 @@
             android:text="@string/month" />
 
         <RadioButton
-            android:id="@+id/rbAll"
+            android:id="@+id/rbYear"
             style="@style/radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
             android:text="@string/year" />
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/rbAll"
             style="@style/radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/graph"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="240dp"
         android:layout_marginTop="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"

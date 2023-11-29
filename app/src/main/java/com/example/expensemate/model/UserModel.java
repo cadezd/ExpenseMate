@@ -4,10 +4,8 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 import com.example.expensemate.databse.entities.User;
-import com.example.expensemate.databse.entities.UserWithTransactions;
 import com.example.expensemate.databse.repository.UserRepository;
 
 import java.util.concurrent.ExecutionException;
