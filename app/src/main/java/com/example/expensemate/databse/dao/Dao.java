@@ -65,6 +65,12 @@ public interface Dao {
     @Query("SELECT * FROM UserTransaction WHERE userId = :userId ORDER BY date DESC")
     LiveData<List<UserTransaction>> getUserTransactions(int userId);
 
+    @Query("SELECT * FROM UserTransaction WHERE userId = :userId AND amount < 0 ORDER BY amount ASC, date DESC")
+    LiveData<List<UserTransaction>> getUserTopSpending(int userId);
+
+    @Query("SELECT * FROM UserTransaction WHERE userId = :userId AND amount >= 0 ORDER BY amount DESC, date DESC")
+    LiveData<List<UserTransaction>> getUserTopIncome(int userId);
+
     @Query("SELECT SUM(amount) FROM UserTransaction WHERE UserTransaction.userId = :userId")
     LiveData<Integer> getUserBalance(int userId);
 

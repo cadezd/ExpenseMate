@@ -6,10 +6,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.expensemate.adapters.TransactionViewAdapter;
 import com.example.expensemate.constants.Constants;
 import com.example.expensemate.databse.entities.User;
 import com.example.expensemate.model.UserTransactionModel;
@@ -32,10 +37,16 @@ public class StatisticsFragment extends Fragment {
     // DECLARE COMPONENTS
     BarChart graph;
     RadioGroup radioGroup;
+    ImageView imgVSort;
+    TextView txtvSortTitle;
+    RecyclerView rvTransactionsSorted;
+
 
     // DECLARE VARIABLES
+    boolean isDescending = true;
     UserTransactionModel transactionModel;
     User user;
+    TransactionViewAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +57,16 @@ public class StatisticsFragment extends Fragment {
         // DECLARING COMPONENTS
         graph = view.findViewById(R.id.graph);
         radioGroup = view.findViewById(R.id.radioGroup);
+        imgVSort = view.findViewById(R.id.imgVSort);
+        txtvSortTitle = view.findViewById(R.id.txtvSortTitle);
+        rvTransactionsSorted = view.findViewById(R.id.rvTransactionsSorted);
+
+        // DECLARING VARIABLES
+        adapter = new TransactionViewAdapter();
+        rvTransactionsSorted.setAdapter(adapter);
+        // setting layout manager to our adapter class.
+        rvTransactionsSorted.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvTransactionsSorted.setHasFixedSize(true);
 
         // Get the user from the intent
         Intent intent = getActivity().getIntent();
@@ -54,9 +75,14 @@ public class StatisticsFragment extends Fragment {
         // Initialize the transaction model
         transactionModel = new UserTransactionModel(getActivity().getApplication(), user.getId());
 
+        // DEFAULT: Display the top spending
+        txtvSortTitle.setText("Top spending");
+        transactionModel.getUserTopSpending().observe(getViewLifecycleOwner(), userTransactions -> {
+            adapter.submitList(userTransactions);
+        });
+
         // DEFAULT: Get the daily analysis for the current week and add it to the graph
         transactionModel.getWeeklyIncomeAndExpenses().observe(getViewLifecycleOwner(), dailyAnalyses -> {
-
             // Graph entries
             ArrayList<BarEntry> barEntriesIncomes = new ArrayList<>();
             ArrayList<BarEntry> barEntriesExpenses = new ArrayList<>();
@@ -130,6 +156,22 @@ public class StatisticsFragment extends Fragment {
                 });
             }
 
+        });
+
+        imgVSort.setOnClickListener(v -> {
+            if (isDescending) {
+                txtvSortTitle.setText("Top spending");
+                transactionModel.getUserTopSpending().observe(getViewLifecycleOwner(), userTransactions -> {
+                    adapter.submitList(userTransactions);
+                });
+                isDescending = !isDescending;
+            } else {
+                txtvSortTitle.setText("Top income");
+                transactionModel.getUserTopIncome().observe(getViewLifecycleOwner(), userTransactions -> {
+                    adapter.submitList(userTransactions);
+                });
+                isDescending = !isDescending;
+            }
         });
 
         // Displaying the graph

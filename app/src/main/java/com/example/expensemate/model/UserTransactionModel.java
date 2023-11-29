@@ -24,6 +24,8 @@ public class UserTransactionModel extends AndroidViewModel {
     private LiveData<Integer> userIncome;
     private LiveData<Integer> userExpense;
     private LiveData<List<UserTransaction>> userTransactions;
+    private LiveData<List<UserTransaction>> userTopSpending;
+    private LiveData<List<UserTransaction>> userTopIncome;
     private LiveData<List<UserTransaction>> todaysUserTransactions;
     private LiveData<List<UserTransaction>> thisWeeksUserTransactions;
     private LiveData<List<UserTransaction>> thisMonthsUserTransactions;
@@ -40,6 +42,8 @@ public class UserTransactionModel extends AndroidViewModel {
         userIncome = repository.getUserIncome(this.userId);
         userExpense = repository.getUserExpense(this.userId);
         userTransactions = repository.getUserTransactions(this.userId);
+        userTopSpending = repository.getUserTopSpending(this.userId);
+        userTopIncome = repository.getUserTopIncome(this.userId);
         todaysUserTransactions = repository.getTodaysUserTransactions(this.userId, new java.util.Date().getTime());
         thisWeeksUserTransactions = repository.getThisWeeksUserTransactions(this.userId, new java.util.Date().getTime());
         thisMonthsUserTransactions = repository.getThisMonthsUserTransactions(this.userId, new java.util.Date().getTime());
@@ -67,6 +71,14 @@ public class UserTransactionModel extends AndroidViewModel {
 
     public LiveData<List<UserTransaction>> getUserTransactions() {
         return userTransactions;
+    }
+
+    public LiveData<List<UserTransaction>> getUserTopIncome() {
+        return userTopIncome;
+    }
+
+    public LiveData<List<UserTransaction>> getUserTopSpending() {
+        return userTopSpending;
     }
 
     public LiveData<Integer> getUserBalance() {
