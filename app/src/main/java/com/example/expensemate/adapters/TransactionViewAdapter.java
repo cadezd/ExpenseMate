@@ -44,6 +44,11 @@ public class TransactionViewAdapter extends ListAdapter<UserTransaction, Transac
         return new TransactionViewHolder(item);
     }
 
+    // creating a method to get course modal for a specific position.
+    public UserTransaction getTransactionAt(int position) {
+        return getItem(position);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull TransactionViewHolder holder, int position) {
         UserTransaction transaction = getItem(position);

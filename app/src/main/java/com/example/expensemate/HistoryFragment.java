@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -91,6 +94,20 @@ public class HistoryFragment extends Fragment {
             String transactionType = actxtVTransactionType.getText().toString().trim();
             setTransactions(transactionType);
         });
+
+        // ITEM TOUCH HELPER
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                transactionModel.deleteTransaction(adapter.getTransactionAt(viewHolder.getAdapterPosition()));
+                Toast.makeText(getContext(), "Transaction deleted", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(rvTransactionHistory);
 
         return view;
     }
