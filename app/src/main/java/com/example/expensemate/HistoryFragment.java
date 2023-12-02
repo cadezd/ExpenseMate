@@ -81,20 +81,6 @@ public class HistoryFragment extends Fragment {
             adapter.submitList(userTransactions);
         });
 
-        // CLICK LISTENERS
-        // Change the transactions based on the selected selected time period
-        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-                    String transactionType = actxtVTransactionType.getText().toString().trim();
-                    setTransactions(transactionType);
-                }
-        );
-
-        // Change the transaction type based on the selected transaction type
-        actxtVTransactionType.setOnItemClickListener((parent, view1, position, id) -> {
-            String transactionType = actxtVTransactionType.getText().toString().trim();
-            setTransactions(transactionType);
-        });
-
         // ITEM TOUCH HELPER
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -108,6 +94,21 @@ public class HistoryFragment extends Fragment {
                 Toast.makeText(getContext(), "Transaction deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(rvTransactionHistory);
+
+
+        // CLICK LISTENERS
+        // Change the transactions based on the selected selected time period
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                    String transactionType = actxtVTransactionType.getText().toString().trim();
+                    setTransactions(transactionType);
+                }
+        );
+
+        // Change the transaction type based on the selected transaction type
+        actxtVTransactionType.setOnItemClickListener((parent, view1, position, id) -> {
+            String transactionType = actxtVTransactionType.getText().toString().trim();
+            setTransactions(transactionType);
+        });
 
         return view;
     }

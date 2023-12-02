@@ -3,29 +3,36 @@ package com.example.expensemate;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expensemate.adapters.TransactionViewAdapter;
 import com.example.expensemate.constants.Constants;
 import com.example.expensemate.databse.entities.User;
+import com.example.expensemate.databse.entities.UserTransaction;
 import com.example.expensemate.model.UserTransactionModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class StatisticsFragment extends Fragment {
@@ -83,6 +90,9 @@ public class StatisticsFragment extends Fragment {
 
         // DEFAULT: Get the daily analysis for the current week and add it to the graph
         transactionModel.getWeeklyIncomeAndExpenses().observe(getViewLifecycleOwner(), dailyAnalyses -> {
+
+            Log.d("TEST", dailyAnalyses.toString());
+
             // Graph entries
             ArrayList<BarEntry> barEntriesIncomes = new ArrayList<>();
             ArrayList<BarEntry> barEntriesExpenses = new ArrayList<>();
@@ -95,12 +105,15 @@ public class StatisticsFragment extends Fragment {
                 barEntriesExpenses.add(new BarEntry(i, dailyAnalyses.get(i).getExpense()));
             }
 
-            labels.add(0, dailyAnalyses.get(last).getDay());
-            barEntriesIncomes.add(0, new BarEntry(last, dailyAnalyses.get(last).getIncome()));
-            barEntriesExpenses.add(0, new BarEntry(last, dailyAnalyses.get(last).getExpense()));
+            if (dailyAnalyses.size() > 0) {
+                labels.add(0, dailyAnalyses.get(last).getDay());
+                barEntriesIncomes.add(0, new BarEntry(last, dailyAnalyses.get(last).getIncome()));
+                barEntriesExpenses.add(0, new BarEntry(last, dailyAnalyses.get(last).getExpense()));
+            }
 
             updateGraph(graph, barEntriesIncomes, barEntriesExpenses, labels);
         });
+
 
         // SETTING CLICK LISTENERS
         radioGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
@@ -113,20 +126,30 @@ public class StatisticsFragment extends Fragment {
             if (checkedId == R.id.rbWeek) {
                 // Get the daily analysis for the current week and displaying it on the graph
                 transactionModel.getWeeklyIncomeAndExpenses().observe(getViewLifecycleOwner(), dailyAnalyses -> {
+
+                    Log.d("TEST", dailyAnalyses.toString());
+
                     int last = dailyAnalyses.size() - 1;
                     for (int i = 0; i < dailyAnalyses.size() - 1; i++) {
                         labels.add(dailyAnalyses.get(i).getDay());
                         barEntriesIncomes.add(new BarEntry(i, dailyAnalyses.get(i).getIncome()));
                         barEntriesExpenses.add(new BarEntry(i, dailyAnalyses.get(i).getExpense()));
                     }
-                    labels.add(0, dailyAnalyses.get(last).getDay());
-                    barEntriesIncomes.add(0, new BarEntry(last, dailyAnalyses.get(last).getIncome()));
-                    barEntriesExpenses.add(0, new BarEntry(last, dailyAnalyses.get(last).getExpense()));
+                    if (dailyAnalyses.size() > 0) {
+                        labels.add(0, dailyAnalyses.get(last).getDay());
+                        barEntriesIncomes.add(0, new BarEntry(last, dailyAnalyses.get(last).getIncome()));
+                        barEntriesExpenses.add(0, new BarEntry(last, dailyAnalyses.get(last).getExpense()));
+                    }
+
                     updateGraph(graph, barEntriesIncomes, barEntriesExpenses, labels);
                 });
             } else if (checkedId == R.id.rbMonth) {
                 // Get the weekly analysis for the current month and displaying it on the graph
                 transactionModel.getMonthlyIncomeAndExpenses().observe(getViewLifecycleOwner(), weeklyAnalyses -> {
+
+                    Log.d("TEST", weeklyAnalyses.toString());
+
+
                     for (int i = 0; i < weeklyAnalyses.size(); i++) {
                         labels.add(weeklyAnalyses.get(i).getWeek());
                         barEntriesIncomes.add(new BarEntry(i, weeklyAnalyses.get(i).getIncome()));
@@ -147,6 +170,9 @@ public class StatisticsFragment extends Fragment {
             } else {
                 // Get the yearly analysis for the current decade and displaying it on the graph
                 transactionModel.getDecadeIncomeAndExpenses().observe(getViewLifecycleOwner(), yearlyAnalyses -> {
+
+                    Log.d("TEST", yearlyAnalyses.toString());
+
                     for (int i = 0; i < yearlyAnalyses.size(); i++) {
                         labels.add(yearlyAnalyses.get(i).getYear());
                         barEntriesIncomes.add(new BarEntry(i, yearlyAnalyses.get(i).getIncome()));
@@ -174,14 +200,16 @@ public class StatisticsFragment extends Fragment {
             }
         });
 
-        // Displaying the graph
-        graph.invalidate();
-
         return view;
     }
 
     private void updateGraph(BarChart barChart, ArrayList<BarEntry> barEntriesIncomes, ArrayList<BarEntry> barEntriesExpenses, ArrayList<String> labels) {
         // START SOURCE : https://www.youtube.com/watch?v=Bd76zMHdrDE
+
+        if (barEntriesIncomes.size() == 0 && barEntriesExpenses.size() == 0) {
+            barEntriesIncomes.add(new BarEntry(0, 0));
+            barEntriesExpenses.add(new BarEntry(0, 0));
+        }
 
         // Graph data sets for incomes
         BarDataSet income = new BarDataSet(barEntriesIncomes, "Income");
@@ -213,6 +241,7 @@ public class StatisticsFragment extends Fragment {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1);
         xAxis.setGranularityEnabled(true);
+        xAxis.setAxisMinimum(100);
 
         // Adding space between the bars and the groups
         float barSpace = 0.08f;
@@ -229,6 +258,9 @@ public class StatisticsFragment extends Fragment {
 
         // Add more margin to the legend
         barChart.setExtraBottomOffset(20f);
+
+        // Move the graph to the left
+        barChart.moveViewToX(0);
 
         // Deisplay the graph
         barChart.invalidate();
