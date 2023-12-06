@@ -110,6 +110,9 @@ public class HistoryFragment extends Fragment {
             setTransactions(transactionType);
         });
 
+        // Display toast message to swipe to delete transaction
+        Toast.makeText(getContext(), "Swipe to delete transaction", Toast.LENGTH_SHORT).show();
+
         return view;
     }
 
