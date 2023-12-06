@@ -10,29 +10,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expensemate.adapters.TransactionViewAdapter;
 import com.example.expensemate.constants.Constants;
 import com.example.expensemate.databse.entities.User;
-import com.example.expensemate.databse.entities.UserTransaction;
 import com.example.expensemate.model.UserTransactionModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class StatisticsFragment extends Fragment {
@@ -50,7 +44,7 @@ public class StatisticsFragment extends Fragment {
 
 
     // DECLARE VARIABLES
-    boolean isDescending = true;
+    boolean isDescending = false;
     UserTransactionModel transactionModel;
     User user;
     TransactionViewAdapter adapter;
@@ -206,20 +200,34 @@ public class StatisticsFragment extends Fragment {
     private void updateGraph(BarChart barChart, ArrayList<BarEntry> barEntriesIncomes, ArrayList<BarEntry> barEntriesExpenses, ArrayList<String> labels) {
         // START SOURCE : https://www.youtube.com/watch?v=Bd76zMHdrDE
 
+        BarDataSet income;
+        BarDataSet expense;
+
         if (barEntriesIncomes.size() == 0 && barEntriesExpenses.size() == 0) {
             barEntriesIncomes.add(new BarEntry(0, 0));
             barEntriesExpenses.add(new BarEntry(0, 0));
+
+            // Graph data sets for incomes
+            income = new BarDataSet(barEntriesIncomes, "Income");
+            income.setColor(Color.parseColor("#25A969"));
+            income.setValueTextSize(0f);
+
+            // Graph data sets for expenses
+            expense = new BarDataSet(barEntriesExpenses, "Expense");
+            expense.setColor(Color.parseColor("#F95B51"));
+            expense.setValueTextSize(0f);
+
+        } else {
+            // Graph data sets for incomes
+            income = new BarDataSet(barEntriesIncomes, "Income");
+            income.setColor(Color.parseColor("#25A969"));
+            income.setValueTextSize(10f);
+
+            // Graph data sets for expenses
+            expense = new BarDataSet(barEntriesExpenses, "Expense");
+            expense.setColor(Color.parseColor("#F95B51"));
+            expense.setValueTextSize(10f);
         }
-
-        // Graph data sets for incomes
-        BarDataSet income = new BarDataSet(barEntriesIncomes, "Income");
-        income.setColor(Color.parseColor("#25A969"));
-        income.setValueTextSize(10f);
-
-        // Graph data sets for expenses
-        BarDataSet expense = new BarDataSet(barEntriesExpenses, "Expense");
-        expense.setColor(Color.parseColor("#F95B51"));
-        expense.setValueTextSize(10f);
 
         // Add the data sets to the graph
         BarData data = new BarData(income, expense);
