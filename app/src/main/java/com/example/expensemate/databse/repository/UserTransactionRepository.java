@@ -47,6 +47,13 @@ public class UserTransactionRepository {
         });
     }
 
+    public void deleteAllTransactions(int userId) {
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        service.execute(() -> {
+            dao.deleteAllTransactions(userId);
+        });
+    }
+
     public UserTransaction getTransaction(int id) throws ExecutionException, InterruptedException {
         UserTransaction transaction = Executors.newSingleThreadExecutor().submit(() -> {
             return dao.getTransaction(id);

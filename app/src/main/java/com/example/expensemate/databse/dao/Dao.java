@@ -50,6 +50,9 @@ public interface Dao {
     @Delete
     void deleteTransaction(UserTransaction transaction);
 
+    @Query("DELETE FROM UserTransaction WHERE userId = :userId")
+    void deleteAllTransactions(int userId);
+
     @Query("SELECT * FROM UserTransaction WHERE id = :id")
     UserTransaction getTransaction(int id);
 

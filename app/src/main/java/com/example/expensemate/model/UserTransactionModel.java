@@ -65,6 +65,10 @@ public class UserTransactionModel extends AndroidViewModel {
         repository.deleteTransaction(transaction);
     }
 
+    public void deleteAllTransactions(int userId) {
+        repository.deleteAllTransactions(userId);
+    }
+
     public UserTransaction getTransaction(int id) throws ExecutionException, InterruptedException {
         return repository.getTransaction(id);
     }
