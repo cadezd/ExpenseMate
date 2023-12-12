@@ -40,6 +40,9 @@ dependencies {
     // library for charts
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
+    // Image Picker Library
+    implementation("com.github.dhaval2404:imagepicker:2.1")
+
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
