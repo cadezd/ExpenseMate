@@ -28,6 +28,7 @@
     <string name="date_label">Date</string>
     <string name="date_hint">Enter transaction date</string>
     <string name="image_label">Image</string>
+    <string name="add_image">Add Image</string>
     <string name="save">Save</string>
 
     <!-- Home page -->
