@@ -1,10 +1,12 @@
 package com.example.expensemate;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -14,6 +16,7 @@ import com.example.expensemate.constants.Constants;
 import com.example.expensemate.databse.entities.UserTransaction;
 import com.example.expensemate.util.DecimalFilter;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class TransactionActivity extends AppCompatActivity {
@@ -46,14 +49,38 @@ public class TransactionActivity extends AppCompatActivity {
         }
 
         // SETTING THE FILTERS
-        DecimalFilter decimalFilter = new DecimalFilter(txtInAmount);
-        txtInAmount.setFilters(new InputFilter[]{decimalFilter});
+        txtInAmount.setFilters(new InputFilter[]{new DecimalFilter(txtInAmount)});
 
         // SETTING ON CLICK LISTENERS
         imgVBack.setOnClickListener(v -> {
             // Go back to Home Page Fragment
             finish();
         });
+
+        // SOURCE START: https://www.geeksforgeeks.org/datepicker-in-android/
+        txtInDate.setKeyListener(null);
+        txtInDate.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    this,
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDayOfMonth) {
+                            String date = selectedDayOfMonth + "." + (selectedMonth + 1) + "." + selectedYear;
+                            txtInDate.setText(date);
+                        }
+                    },
+                    year,
+                    month,
+                    dayOfMonth);
+
+            datePickerDialog.show();
+        });
+        // SOURCE END: https://www.geeksforgeeks.org/datepicker-in-android/
 
         btnSave.setOnClickListener(v -> {
             Log.d("TEST", "gathering data");
