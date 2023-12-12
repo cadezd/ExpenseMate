@@ -2,6 +2,7 @@ package com.example.expensemate;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
@@ -10,11 +11,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.expensemate.constants.Constants;
 import com.example.expensemate.databse.entities.UserTransaction;
 import com.example.expensemate.util.DecimalFilter;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -25,7 +29,7 @@ public class TransactionActivity extends AppCompatActivity {
     EditText txtInDescription, txtInAmount, txtInDate;
     ImageView imgVPicture, imgVBack;
 
-    Button btnSave;
+    Button btnSave, btnAddImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class TransactionActivity extends AppCompatActivity {
         imgVPicture = findViewById(R.id.imgVPicture);
         imgVBack = findViewById(R.id.imgVBack);
 
+        btnAddImage = findViewById(R.id.btnAddImage);
         btnSave = findViewById(R.id.btnSave);
 
         // Get Intent
@@ -82,6 +87,18 @@ public class TransactionActivity extends AppCompatActivity {
         });
         // SOURCE END: https://www.geeksforgeeks.org/datepicker-in-android/
 
+        btnAddImage.setOnClickListener(v -> {
+            if (imgVPicture.getDrawable() == null) {
+                ImagePicker.Companion.with(this)
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start();
+            } else {
+                imgVPicture.setImageDrawable(null);
+                btnAddImage.setText("Add Image");
+            }
+        });
+
         btnSave.setOnClickListener(v -> {
             Log.d("TEST", "gathering data");
             // Collect data from inputs and send it to the main activity
@@ -103,7 +120,31 @@ public class TransactionActivity extends AppCompatActivity {
             setResult(RESULT_OK, data);
             finish();
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (resultCode != RESULT_OK)
+            return;
+
+        try {
+            Uri uri = data.getData();
+            imgVPicture.setImageURI(uri);
+            btnAddImage.setText("Remove Image");
+        } catch (Exception e) {
+            displayErrorMessage("Error", "Something went wrong. Try again.\nError: " + e.getMessage());
+            btnAddImage.setText("Add Image");
+        }
+    }
+
+    private void displayErrorMessage(String title, String message) {
+        // Display an error with alert dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", null);
+        builder.show();
     }
 }
