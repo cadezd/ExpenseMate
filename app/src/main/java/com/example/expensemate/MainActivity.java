@@ -1,27 +1,38 @@
 package com.example.expensemate;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-// START source: https://www.c-sharpcorner.com/article/bottom-navigation-bar-in-android/
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+// START source: https://www.c-sharpcorner.com/article/bottom-navigation-bar-in-android/ and https://www.geeksforgeeks.org/how-to-save-fragment-states-with-bottomnavigationview-in-android/
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
 
     // DECLARING COMPONENTS
     BottomNavigationView bottomNavigationView;
+
+    // DECLARING VARIABLES
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    StatisticsFragment statisticsFragment = new StatisticsFragment();
+    HomePageFragment homePageFragment = new HomePageFragment();
+    HistoryFragment historyFragment = new HistoryFragment();
+    UserProfileFragment userProfileFragment = new UserProfileFragment();
+    Fragment active = homePageFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fragmentManager.beginTransaction().add(R.id.frameLayout, userProfileFragment).hide(userProfileFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.frameLayout, historyFragment).hide(historyFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.frameLayout, homePageFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.frameLayout, statisticsFragment).hide(statisticsFragment).commit();
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -31,34 +42,28 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment selectedFragment = null;
-
         switch (item.getItemId()) {
             case R.id.statistics:
-                selectedFragment = new StatisticsFragment();
-                break;
+                fragmentManager.beginTransaction().hide(active).show(statisticsFragment).commit();
+                active = statisticsFragment;
+                return true;
             case R.id.home_page:
-                selectedFragment = new HomePageFragment();
-                break;
+                fragmentManager.beginTransaction().hide(active).show(homePageFragment).commit();
+                active = homePageFragment;
+                return true;
             case R.id.history:
-                selectedFragment = new HistoryFragment();
-                break;
+                fragmentManager.beginTransaction().hide(active).show(historyFragment).commit();
+                active = historyFragment;
+                return true;
             case R.id.profile:
-                selectedFragment = new UserProfileFragment();
-                break;
-        }
-
-        if (selectedFragment != null) {
-            loadFragment(selectedFragment);
-            return true;
+                fragmentManager.beginTransaction().hide(active).show(userProfileFragment).commit();
+                active = userProfileFragment;
+                return true;
         }
 
         return false;
     }
 
-    public void loadFragment(Fragment fragment) {
-        // To attach fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragment).commit();
-    }
+
 }
-// END source: https://www.c-sharpcorner.com/article/bottom-navigation-bar-in-android/
+// END source: https://www.c-sharpcorner.com/article/bottom-navigation-bar-in-android/ and https://www.geeksforgeeks.org/how-to-save-fragment-states-with-bottomnavigationview-in-android/
