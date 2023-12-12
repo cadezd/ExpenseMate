@@ -30,7 +30,7 @@ public class HomePageFragment extends Fragment {
     }
 
     // DECLARING COMPONENTS
-    TextView txtVFullName, txtVTotalBalance, txtVTotalIncome, txtVTotalExpense;
+    TextView txtVGreeting, txtVFullName, txtVTotalBalance, txtVTotalIncome, txtVTotalExpense;
     ImageView imgVAddTransaction;
     RecyclerView rvTransactionHistory;
 
@@ -58,6 +58,7 @@ public class HomePageFragment extends Fragment {
 
         // INITIALIZING COMPONENTS
         imgVAddTransaction = view.findViewById(R.id.imgVAddTransaction);
+        txtVGreeting = view.findViewById(R.id.txtVGreeting);
         txtVFullName = view.findViewById(R.id.txtVFullName);
         txtVTotalBalance = view.findViewById(R.id.txtVTotalBalance);
         txtVTotalIncome = view.findViewById(R.id.txtVTotalIncome);
@@ -69,7 +70,11 @@ public class HomePageFragment extends Fragment {
         rvTransactionHistory.setHasFixedSize(true);
 
         // SETTING VALUES TO COMPONENTS
+
+        // Setting user name
         txtVFullName.setText(user.getFullName());
+
+        // Setting user balance and income and expense
         transactionModel.getUserBalance().observe(getViewLifecycleOwner(), integer -> {
             int totalBalance = (integer == null) ? 0 : integer;
             txtVTotalBalance.setText(totalBalance + "€");
@@ -81,15 +86,22 @@ public class HomePageFragment extends Fragment {
         transactionModel.getUserExpense().observe(getViewLifecycleOwner(), integer -> {
             int totalExpense = (integer == null) ? 0 : integer;
             txtVTotalExpense.setText(totalExpense + "€");
-
         });
+
+        // Setting greeting
+        if (new Date().getHours() < 12)
+            txtVGreeting.setText("Good morning");
+        else if (new Date().getHours() < 18)
+            txtVGreeting.setText("Good afternoon");
+        else
+            txtVGreeting.setText("Good evening");
 
         rvTransactionHistory.setAdapter(adapter);
         transactionModel.getTodaysUserTransactions().observe(getViewLifecycleOwner(), transactions -> {
             adapter.submitList(transactions);
         });
 
-        // SETTING ON CLICK LISTENERS
+        // SETTING ON CLICK LISTENERS AND THREADS
         imgVAddTransaction.setOnClickListener(v -> {
             // Open Transaction Activity
             Intent intentTransactionActivity = new Intent(getActivity(), TransactionActivity.class);
