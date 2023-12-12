@@ -170,6 +170,14 @@
                 app:srcCompat="@drawable/ic_image" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAddImage"
+                style="@style/button_outline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/add_image" />
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSave"
                 style="@style/button"
                 android:layout_width="match_parent"
