@@ -1,9 +1,8 @@
 package com.example.expensemate;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.expensemate.constants.Constants;
 import com.example.expensemate.databse.entities.UserTransaction;
+import com.example.expensemate.util.DecimalFilter;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 public class TransactionActivity extends AppCompatActivity {
@@ -45,6 +44,10 @@ public class TransactionActivity extends AppCompatActivity {
         if (!intent.hasExtra(Constants.NEW_TRANSACTION_TAG)) {
             // TODO: set the data to the inputs
         }
+
+        // SETTING THE FILTERS
+        DecimalFilter decimalFilter = new DecimalFilter(txtInAmount);
+        txtInAmount.setFilters(new InputFilter[]{decimalFilter});
 
         // SETTING ON CLICK LISTENERS
         imgVBack.setOnClickListener(v -> {
