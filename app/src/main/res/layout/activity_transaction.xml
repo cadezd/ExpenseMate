@@ -164,10 +164,12 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="20dp"
+                android:adjustViewBounds="true"
                 android:background="@drawable/image_view_border"
-                android:paddingTop="45dp"
-                android:paddingBottom="45dp"
-                app:srcCompat="@drawable/ic_image" />
+                android:paddingStart="22dp"
+                android:paddingTop="22dp"
+                android:paddingEnd="22dp"
+                android:paddingBottom="22dp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnAddImage"
