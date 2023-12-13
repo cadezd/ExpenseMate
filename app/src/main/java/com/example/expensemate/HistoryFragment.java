@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,9 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.expensemate.adapters.TransactionViewAdapter;
 import com.example.expensemate.constants.Constants;
 import com.example.expensemate.databse.entities.User;
+import com.example.expensemate.databse.entities.UserTransaction;
 import com.example.expensemate.model.UserTransactionModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 
@@ -59,9 +62,8 @@ public class HistoryFragment extends Fragment {
         user = (User) intent.getSerializableExtra(Constants.USER_TAG);
         transactionModel = new UserTransactionModel(getActivity().getApplication(), user.getId());
 
-        // TODO: change this to a new adapter (when it is created)
-        adapter = new TransactionViewAdapter();
 
+        adapter = new TransactionViewAdapter();
         rvTransactionHistory.setAdapter(adapter);
         // setting layout manager to our adapter class.
         rvTransactionHistory.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -76,11 +78,6 @@ public class HistoryFragment extends Fragment {
         actxtVTransactionType.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, transactionTypes));
         actxtVTransactionType.setText("All", false);
 
-        // Setting default value
-        transactionModel.getTodaysUserTransactions().observe(getViewLifecycleOwner(), userTransactions -> {
-            adapter.submitList(userTransactions);
-        });
-
         // ITEM TOUCH HELPER
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -94,6 +91,20 @@ public class HistoryFragment extends Fragment {
                 Toast.makeText(getContext(), "Transaction deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(rvTransactionHistory);
+
+        // Setting on item click listener to update transactions
+        adapter.setOnItemClickListener(transaction -> {
+            // Open Transaction Activity
+            Intent intentTransactionActivity = new Intent(getActivity(), TransactionActivity.class);
+            intentTransactionActivity.putExtra(Constants.TRANSACTION_ID_TAG, transaction.getId());
+            intentTransactionActivity.putExtra(Constants.TRANSACTION_DESCRIPTION_TAG, transaction.getDescription());
+            intentTransactionActivity.putExtra(Constants.TRANSACTION_AMOUNT_TAG, transaction.getAmount());
+            intentTransactionActivity.putExtra(Constants.TRANSACTION_DATE_TAG, transaction.getDate());
+            intentTransactionActivity.putExtra(Constants.TRANSACTION_IMAGE_TAG, transaction.getImage());
+
+            // Start activity for result
+            startActivityForResult(intentTransactionActivity, Constants.UPDATE_TRANSACTION_REQUEST);
+        });
 
 
         // CLICK LISTENERS
@@ -114,6 +125,33 @@ public class HistoryFragment extends Fragment {
         Toast.makeText(getContext(), "Swipe to delete transaction", Toast.LENGTH_SHORT).show();
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.UPDATE_TRANSACTION_REQUEST && resultCode == getActivity().RESULT_OK) {
+            // Getting data of new transaction from intent
+            int id = data.getIntExtra(Constants.TRANSACTION_ID_TAG, -1);
+            if (id == -1) {
+                Toast.makeText(getActivity(), "Contact can't be updated", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String description = data.getStringExtra(Constants.TRANSACTION_DESCRIPTION_TAG);
+            double amount = data.getDoubleExtra(Constants.TRANSACTION_AMOUNT_TAG, 0);
+            Date date = (Date) data.getSerializableExtra(Constants.TRANSACTION_DATE_TAG);
+            byte[] imageInByte = data.getByteArrayExtra(Constants.TRANSACTION_IMAGE_TAG);
+
+            // Creating new transaction
+            UserTransaction transaction = new UserTransaction(user.getId(), description, amount, date, imageInByte);
+            transaction.setId(id);
+
+            // Updating transaction to database
+            transactionModel.updateTransaction(transaction);
+            Toast.makeText(getActivity(), "Transaction updated", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setTransactions(String transactionType) {
