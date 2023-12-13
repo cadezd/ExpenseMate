@@ -110,15 +110,14 @@ public class HistoryFragment extends Fragment {
         // CLICK LISTENERS
         // Change the transactions based on the selected selected time period
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-                    String transactionType = actxtVTransactionType.getText().toString().trim();
-                    setTransactions(transactionType);
-                }
-        );
+            String transactionType = actxtVTransactionType.getText().toString().trim();
+            setTransactions(radioGroup.getCheckedRadioButtonId(), transactionType);
+        });
 
         // Change the transaction type based on the selected transaction type
         actxtVTransactionType.setOnItemClickListener((parent, view1, position, id) -> {
             String transactionType = actxtVTransactionType.getText().toString().trim();
-            setTransactions(transactionType);
+            setTransactions(radioGroup.getCheckedRadioButtonId(), transactionType);
         });
 
         // Display toast message to swipe to delete transaction
@@ -154,8 +153,19 @@ public class HistoryFragment extends Fragment {
         }
     }
 
-    private void setTransactions(String transactionType) {
-        if (radioGroup.getCheckedRadioButtonId() == R.id.rbDay) {
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (hidden)
+            return;
+
+        String transactionType = actxtVTransactionType.getText().toString().trim();
+        setTransactions(radioGroup.getCheckedRadioButtonId(), transactionType);
+    }
+
+    private void setTransactions(int chekedId, String transactionType) {
+        if (chekedId == R.id.rbDay) {
             transactionModel.getTodaysUserTransactions().observe(getViewLifecycleOwner(), userTransactions -> {
                 // Filter the transactions by the transaction type
                 userTransactions = userTransactions.stream().filter(userTransaction -> {
@@ -164,7 +174,7 @@ public class HistoryFragment extends Fragment {
 
                 adapter.submitList(userTransactions);
             });
-        } else if (radioGroup.getCheckedRadioButtonId() == R.id.rbWeek) {
+        } else if (chekedId == R.id.rbWeek) {
             transactionModel.getThisWeeksUserTransactions().observe(getViewLifecycleOwner(), userTransactions -> {
                 // Filter the transactions by the transaction type
                 userTransactions = userTransactions.stream().filter(userTransaction -> {
@@ -173,7 +183,7 @@ public class HistoryFragment extends Fragment {
 
                 adapter.submitList(userTransactions);
             });
-        } else if (radioGroup.getCheckedRadioButtonId() == R.id.rbMonth) {
+        } else if (chekedId == R.id.rbMonth) {
             transactionModel.getThisMonthsUserTransactions().observe(getViewLifecycleOwner(), userTransactions -> {
                 // Filter the transactions by the transaction type
                 userTransactions = userTransactions.stream().filter(userTransaction -> {
