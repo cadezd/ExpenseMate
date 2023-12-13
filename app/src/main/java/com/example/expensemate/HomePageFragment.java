@@ -2,12 +2,12 @@ package com.example.expensemate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -100,6 +100,20 @@ public class HomePageFragment extends Fragment {
         transactionModel.getTodaysUserTransactions().observe(getViewLifecycleOwner(), transactions -> {
             adapter.submitList(transactions);
         });
+        // Setting on item click listener to update transactions
+        adapter.setOnItemClickListener(transaction -> {
+            // Open Transaction Activity
+            Intent intentTransactionActivity = new Intent(getActivity(), TransactionActivity.class);
+            intentTransactionActivity.putExtra(Constants.TRANSACTION_ID_TAG, transaction.getId());
+            intentTransactionActivity.putExtra(Constants.TRANSACTION_DESCRIPTION_TAG, transaction.getDescription());
+            intentTransactionActivity.putExtra(Constants.TRANSACTION_AMOUNT_TAG, transaction.getAmount());
+            intentTransactionActivity.putExtra(Constants.TRANSACTION_DATE_TAG, transaction.getDate());
+            intentTransactionActivity.putExtra(Constants.TRANSACTION_IMAGE_TAG, transaction.getImage());
+
+            // Start activity for result
+            startActivityForResult(intentTransactionActivity, Constants.UPDATE_TRANSACTION_REQUEST);
+        });
+
 
         // SETTING ON CLICK LISTENERS AND THREADS
         imgVAddTransaction.setOnClickListener(v -> {
@@ -116,14 +130,40 @@ public class HomePageFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d("TEST", "onActivityResult");
         if (requestCode == Constants.ADD_TRANSACTION_REQUEST && resultCode == getActivity().RESULT_OK) {
-            Log.d("TEST", "result success");
-            UserTransaction transaction = (UserTransaction) data.getSerializableExtra(Constants.TRANSACTION_TAG);
-            Log.d("TEST", transaction.toString());
+            // Getting data of new transaction from intent
+            String description = data.getStringExtra(Constants.TRANSACTION_DESCRIPTION_TAG);
+            double amount = data.getDoubleExtra(Constants.TRANSACTION_AMOUNT_TAG, 0);
+            Date date = (Date) data.getSerializableExtra(Constants.TRANSACTION_DATE_TAG);
+            byte[] imageInByte = data.getByteArrayExtra(Constants.TRANSACTION_IMAGE_TAG);
 
-            // TODO: add transaction to the database https://stackoverflow.com/questions/67203765/how-to-insert-entities-with-a-one-to-many-relationship-in-room
+            // Creating new transaction
+            UserTransaction transaction = new UserTransaction(user.getId(), description, amount, date, imageInByte);
+
+            // Inserting transaction to database
+            transactionModel.insertTransaction(transaction);
+            Toast.makeText(getActivity(), "Transaction inserted", Toast.LENGTH_SHORT).show();
+
+        } else if (requestCode == Constants.UPDATE_TRANSACTION_REQUEST && resultCode == getActivity().RESULT_OK) {
+            // Getting data of new transaction from intent
+            int id = data.getIntExtra(Constants.TRANSACTION_ID_TAG, -1);
+            if (id == -1) {
+                Toast.makeText(getActivity(), "Contact can't be updated", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String description = data.getStringExtra(Constants.TRANSACTION_DESCRIPTION_TAG);
+            double amount = data.getDoubleExtra(Constants.TRANSACTION_AMOUNT_TAG, 0);
+            Date date = (Date) data.getSerializableExtra(Constants.TRANSACTION_DATE_TAG);
+            byte[] imageInByte = data.getByteArrayExtra(Constants.TRANSACTION_IMAGE_TAG);
+
+            // Creating new transaction
+            UserTransaction transaction = new UserTransaction(user.getId(), description, amount, date, imageInByte);
+            transaction.setId(id);
+
+            // Updating transaction to database
+            transactionModel.updateTransaction(transaction);
+            Toast.makeText(getActivity(), "Transaction updated", Toast.LENGTH_SHORT).show();
         }
-
     }
 }
