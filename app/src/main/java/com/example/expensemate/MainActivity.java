@@ -18,10 +18,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     // DECLARING VARIABLES
     FragmentManager fragmentManager = getSupportFragmentManager();
-    StatisticsFragment statisticsFragment = new StatisticsFragment();
+    StatisticsFragment statisticsFragment;
+    HistoryFragment historyFragment;
+    UserProfileFragment userProfileFragment;
     HomePageFragment homePageFragment = new HomePageFragment();
-    HistoryFragment historyFragment = new HistoryFragment();
-    UserProfileFragment userProfileFragment = new UserProfileFragment();
     Fragment active = homePageFragment;
 
     @Override
@@ -29,10 +29,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragmentManager.beginTransaction().add(R.id.frameLayout, userProfileFragment).hide(userProfileFragment).commit();
-        fragmentManager.beginTransaction().add(R.id.frameLayout, historyFragment).hide(historyFragment).commit();
         fragmentManager.beginTransaction().add(R.id.frameLayout, homePageFragment).commit();
-        fragmentManager.beginTransaction().add(R.id.frameLayout, statisticsFragment).hide(statisticsFragment).commit();
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -44,18 +41,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.statistics:
+                if (statisticsFragment == null) {
+                    statisticsFragment = new StatisticsFragment();
+                    fragmentManager.beginTransaction().add(R.id.frameLayout, statisticsFragment).hide(statisticsFragment).commit();
+                }
                 fragmentManager.beginTransaction().hide(active).show(statisticsFragment).commit();
                 active = statisticsFragment;
                 return true;
             case R.id.home_page:
+                if (homePageFragment == null) {
+                    homePageFragment = new HomePageFragment();
+                    fragmentManager.beginTransaction().add(R.id.frameLayout, homePageFragment).hide(homePageFragment).commit();
+                }
                 fragmentManager.beginTransaction().hide(active).show(homePageFragment).commit();
                 active = homePageFragment;
                 return true;
             case R.id.history:
+                if (historyFragment == null) {
+                    historyFragment = new HistoryFragment();
+                    fragmentManager.beginTransaction().add(R.id.frameLayout, historyFragment).hide(historyFragment).commit();
+                }
                 fragmentManager.beginTransaction().hide(active).show(historyFragment).commit();
                 active = historyFragment;
                 return true;
             case R.id.profile:
+                if (userProfileFragment == null) {
+                    userProfileFragment = new UserProfileFragment();
+                    fragmentManager.beginTransaction().add(R.id.frameLayout, userProfileFragment).hide(userProfileFragment).commit();
+                }
                 fragmentManager.beginTransaction().hide(active).show(userProfileFragment).commit();
                 active = userProfileFragment;
                 return true;
