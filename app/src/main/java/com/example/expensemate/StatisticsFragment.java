@@ -111,71 +111,7 @@ public class StatisticsFragment extends Fragment {
 
         // SETTING CLICK LISTENERS
         radioGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
-            // Graph entries
-            ArrayList<BarEntry> barEntriesIncomes = new ArrayList<>();
-            ArrayList<BarEntry> barEntriesExpenses = new ArrayList<>();
-            // Graph labels
-            ArrayList<String> labels = new ArrayList<>();
-
-            if (checkedId == R.id.rbWeek) {
-                // Get the daily analysis for the current week and displaying it on the graph
-                transactionModel.getWeeklyIncomeAndExpenses().observe(getViewLifecycleOwner(), dailyAnalyses -> {
-
-                    Log.d("TEST", dailyAnalyses.toString());
-
-                    int last = dailyAnalyses.size() - 1;
-                    for (int i = 0; i < dailyAnalyses.size() - 1; i++) {
-                        labels.add(dailyAnalyses.get(i).getDay());
-                        barEntriesIncomes.add(new BarEntry(i, dailyAnalyses.get(i).getIncome()));
-                        barEntriesExpenses.add(new BarEntry(i, dailyAnalyses.get(i).getExpense()));
-                    }
-                    if (dailyAnalyses.size() > 0) {
-                        labels.add(0, dailyAnalyses.get(last).getDay());
-                        barEntriesIncomes.add(0, new BarEntry(last, dailyAnalyses.get(last).getIncome()));
-                        barEntriesExpenses.add(0, new BarEntry(last, dailyAnalyses.get(last).getExpense()));
-                    }
-
-                    updateGraph(graph, barEntriesIncomes, barEntriesExpenses, labels);
-                });
-            } else if (checkedId == R.id.rbMonth) {
-                // Get the weekly analysis for the current month and displaying it on the graph
-                transactionModel.getMonthlyIncomeAndExpenses().observe(getViewLifecycleOwner(), weeklyAnalyses -> {
-
-                    Log.d("TEST", weeklyAnalyses.toString());
-
-
-                    for (int i = 0; i < weeklyAnalyses.size(); i++) {
-                        labels.add(weeklyAnalyses.get(i).getWeek());
-                        barEntriesIncomes.add(new BarEntry(i, weeklyAnalyses.get(i).getIncome()));
-                        barEntriesExpenses.add(new BarEntry(i, weeklyAnalyses.get(i).getExpense()));
-                    }
-                    updateGraph(graph, barEntriesIncomes, barEntriesExpenses, labels);
-                });
-            } else if (checkedId == R.id.rbYear) {
-                // Get the monthly analysis for the current year and displaying it on the graph
-                transactionModel.getYearlyIncomeAndExpenses().observe(getViewLifecycleOwner(), monthlyAnalyses -> {
-                    for (int i = 0; i < monthlyAnalyses.size(); i++) {
-                        labels.add(monthlyAnalyses.get(i).getMonth());
-                        barEntriesIncomes.add(new BarEntry(i, monthlyAnalyses.get(i).getIncome()));
-                        barEntriesExpenses.add(new BarEntry(i, monthlyAnalyses.get(i).getExpense()));
-                    }
-                    updateGraph(graph, barEntriesIncomes, barEntriesExpenses, labels);
-                });
-            } else {
-                // Get the yearly analysis for the current decade and displaying it on the graph
-                transactionModel.getDecadeIncomeAndExpenses().observe(getViewLifecycleOwner(), yearlyAnalyses -> {
-
-                    Log.d("TEST", yearlyAnalyses.toString());
-
-                    for (int i = 0; i < yearlyAnalyses.size(); i++) {
-                        labels.add(yearlyAnalyses.get(i).getYear());
-                        barEntriesIncomes.add(new BarEntry(i, yearlyAnalyses.get(i).getIncome()));
-                        barEntriesExpenses.add(new BarEntry(i, yearlyAnalyses.get(i).getExpense()));
-                    }
-                    updateGraph(graph, barEntriesIncomes, barEntriesExpenses, labels);
-                });
-            }
-
+            displayDataOnGraph(checkedId);
         });
 
         imgVSort.setOnClickListener(v -> {
@@ -195,6 +131,84 @@ public class StatisticsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (hidden)
+            return;
+
+        displayDataOnGraph(radioGroup.getCheckedRadioButtonId());
+    }
+
+    private void displayDataOnGraph(int checkedId) {
+        // Graph entries
+        ArrayList<BarEntry> barEntriesIncomes = new ArrayList<>();
+        ArrayList<BarEntry> barEntriesExpenses = new ArrayList<>();
+        // Graph labels
+        ArrayList<String> labels = new ArrayList<>();
+
+        if (checkedId == R.id.rbWeek) {
+            // Get the daily analysis for the current week and displaying it on the graph
+            transactionModel.getWeeklyIncomeAndExpenses().observe(getViewLifecycleOwner(), dailyAnalyses -> {
+
+                Log.d("TEST", dailyAnalyses.toString());
+
+                for (int i = 0; i < dailyAnalyses.size(); i++) {
+                    labels.add(dailyAnalyses.get(i).getDay());
+                    barEntriesIncomes.add(new BarEntry(i, dailyAnalyses.get(i).getIncome()));
+                    barEntriesExpenses.add(new BarEntry(i, dailyAnalyses.get(i).getExpense()));
+                }
+
+                // move Saturday to the first position
+                int idx = labels.indexOf("Sat");
+                if (idx != -1 && idx != 0) {
+                    labels.add(0, labels.remove(idx));
+                    barEntriesIncomes.add(0, barEntriesIncomes.remove(idx));
+                    barEntriesExpenses.add(0, barEntriesExpenses.remove(idx));
+                }
+
+                updateGraph(graph, barEntriesIncomes, barEntriesExpenses, labels);
+            });
+        } else if (checkedId == R.id.rbMonth) {
+            // Get the weekly analysis for the current month and displaying it on the graph
+            transactionModel.getMonthlyIncomeAndExpenses().observe(getViewLifecycleOwner(), weeklyAnalyses -> {
+
+                Log.d("TEST", weeklyAnalyses.toString());
+
+                for (int i = 0; i < weeklyAnalyses.size(); i++) {
+                    labels.add(weeklyAnalyses.get(i).getWeek());
+                    barEntriesIncomes.add(new BarEntry(i, weeklyAnalyses.get(i).getIncome()));
+                    barEntriesExpenses.add(new BarEntry(i, weeklyAnalyses.get(i).getExpense()));
+                }
+                updateGraph(graph, barEntriesIncomes, barEntriesExpenses, labels);
+            });
+        } else if (checkedId == R.id.rbYear) {
+            // Get the monthly analysis for the current year and displaying it on the graph
+            transactionModel.getYearlyIncomeAndExpenses().observe(getViewLifecycleOwner(), monthlyAnalyses -> {
+                for (int i = 0; i < monthlyAnalyses.size(); i++) {
+                    labels.add(monthlyAnalyses.get(i).getMonth());
+                    barEntriesIncomes.add(new BarEntry(i, monthlyAnalyses.get(i).getIncome()));
+                    barEntriesExpenses.add(new BarEntry(i, monthlyAnalyses.get(i).getExpense()));
+                }
+                updateGraph(graph, barEntriesIncomes, barEntriesExpenses, labels);
+            });
+        } else {
+            // Get the yearly analysis for the current decade and displaying it on the graph
+            transactionModel.getDecadeIncomeAndExpenses().observe(getViewLifecycleOwner(), yearlyAnalyses -> {
+
+                Log.d("TEST", yearlyAnalyses.toString());
+
+                for (int i = 0; i < yearlyAnalyses.size(); i++) {
+                    labels.add(yearlyAnalyses.get(i).getYear());
+                    barEntriesIncomes.add(new BarEntry(i, yearlyAnalyses.get(i).getIncome()));
+                    barEntriesExpenses.add(new BarEntry(i, yearlyAnalyses.get(i).getExpense()));
+                }
+                updateGraph(graph, barEntriesIncomes, barEntriesExpenses, labels);
+            });
+        }
     }
 
     private void updateGraph(BarChart barChart, ArrayList<BarEntry> barEntriesIncomes, ArrayList<BarEntry> barEntriesExpenses, ArrayList<String> labels) {
