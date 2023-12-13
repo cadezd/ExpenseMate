@@ -10,6 +10,10 @@ public class Constants {
 
     public static final String NEW_TRANSACTION_TAG = "NEW_TRANSACTION";
 
-    public static final String TRANSACTION_TAG = "TRANSACTION";
+    public static final String TRANSACTION_ID_TAG = "TRANSACTION_ID";
+    public static final String TRANSACTION_DESCRIPTION_TAG = "TRANSACTION_DESCRIPTION";
+    public static final String TRANSACTION_AMOUNT_TAG = "TRANSACTION_AMOUNT";
+    public static final String TRANSACTION_DATE_TAG = "TRANSACTION_DATE";
+    public static final String TRANSACTION_IMAGE_TAG = "TRANSACTION_IMAGE";
 
 }
