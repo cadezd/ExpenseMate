@@ -193,7 +193,7 @@ public class TransactionActivity extends AppCompatActivity {
         try {
             // Convert string to date
             // SOURCE START: https://stackoverflow.com/questions/22929237/convert-java-time-localdate-into-java-util-date-type
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy");
             LocalDate localDate = LocalDate.parse(date, formatter);
             return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
             // SOURCE END: https://stackoverflow.com/questions/22929237/convert-java-time-localdate-into-java-util-date-type
@@ -206,7 +206,7 @@ public class TransactionActivity extends AppCompatActivity {
     private String parseDateToString(Date date) {
         try {
             // Convert date to string
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("d.M.yyyy");
             return dateFormat.format(date);
         } catch (Exception e) {
             Log.e("Error", "Error: " + e.getMessage());
