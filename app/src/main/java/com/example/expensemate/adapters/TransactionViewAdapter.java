@@ -18,6 +18,9 @@ import java.text.SimpleDateFormat;
 
 public class TransactionViewAdapter extends ListAdapter<UserTransaction, TransactionViewAdapter.TransactionViewHolder> {
 
+    // creating a variable for on item click listener.
+    private OnItemClickListener listener;
+
     // TODO: undestand the code below
     public TransactionViewAdapter() {
         super(DIFF_CALLBACK);
@@ -75,6 +78,21 @@ public class TransactionViewAdapter extends ListAdapter<UserTransaction, Transac
             txtVDescription = itemView.findViewById(R.id.txtVDescription);
             txtVDate = itemView.findViewById(R.id.txtVDate);
             txtVAmount = itemView.findViewById(R.id.txtVAmount);
+
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (listener != null && position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(getTransactionAt(position));
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(UserTransaction model);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }
