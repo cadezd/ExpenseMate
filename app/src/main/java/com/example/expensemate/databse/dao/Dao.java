@@ -89,7 +89,7 @@ public interface Dao {
             "SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) * -1 AS expense " +
             "FROM UserTransaction " +
             "WHERE UserTransaction.userId = :userId " +
-            "AND UserTransaction.date / (1000 * 60 * 60 * 24) BETWEEN (:date / (1000 * 60 * 60 * 24)) - (:date / (1000 * 60 * 60 * 24)) % 7 AND (:date / (1000 * 60 * 60 * 24)) + 6 - (:date / (1000 * 60 * 60 * 24)) % 7 " +
+            "AND UserTransaction.date / (1000 * 60 * 60 * 24) BETWEEN (:date / (1000 * 60 * 60 * 24)) - (:date / (1000 * 60 * 60 * 24)) % 7 AND (:date / (1000 * 60 * 60 * 24)) " +
             "GROUP BY dayIndex " +
             "ORDER BY dayIndex ASC")
     LiveData<List<DailyAnalysis>> getWeeklyIncomeAndExpenses(int userId, long date);
@@ -100,7 +100,7 @@ public interface Dao {
             "SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) * -1 AS expense " +
             "FROM UserTransaction " +
             "WHERE UserTransaction.userId = :userId " +
-            "AND UserTransaction.date / (1000 * 60 * 60 * 24 * 7) BETWEEN (:date / (1000 * 60 * 60 * 24 * 7)) - (:date / (1000 * 60 * 60 * 24 * 7)) % 30 AND (:date / (1000 * 60 * 60 * 24 * 7)) + 29 - (:date / (1000 * 60 * 60 * 24 * 7)) % 30 " +
+            "AND UserTransaction.date / (1000 * 60 * 60 * 24 * 7) BETWEEN (:date / (1000 * 60 * 60 * 24 * 7)) - (:date / (1000 * 60 * 60 * 24 * 7)) % 30 AND (:date / (1000 * 60 * 60 * 24 * 7)) " +
             "GROUP BY weekIndex " +
             "ORDER BY weekIndex ASC")
     LiveData<List<WeeklyAnalysis>> getMonthlyIncomeAndExpenses(int userId, long date);
@@ -111,18 +111,18 @@ public interface Dao {
             "SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) * -1 AS expense " +
             "FROM UserTransaction " +
             "WHERE UserTransaction.userId = :userId " +
-            "AND UserTransaction.date / (1000 * 60 * 60 * 24 * 30) BETWEEN (:date / (1000 * 60 * 60 * 24 * 30)) - (:date / (1000 * 60 * 60 * 24 * 30)) % 12 AND (:date / (1000 * 60 * 60 * 24 * 30)) + 11 - (:date / (1000 * 60 * 60 * 24 * 30)) % 12 " +
+            "AND UserTransaction.date / (1000 * 60 * 60 * 24 * 30) BETWEEN (:date / (1000 * 60 * 60 * 24 * 30)) - (:date / (1000 * 60 * 60 * 24 * 30)) % 12 AND (:date / (1000 * 60 * 60 * 24 * 30)) " +
             "GROUP BY monthIndex " +
             "ORDER BY monthIndex ASC")
     LiveData<List<MonthlyAnalysis>> getYearlyIncomeAndExpenses(int userId, long date);
 
-    // Query to get the yearly income and expenses for the current year (grouped by year)
+    // Query to get the yearly income and expenses for the current decade (grouped by year)
     @Query("SELECT strftime('%Y', date / 1000, 'unixepoch') AS year, " +
             "SUM(CASE WHEN amount >= 0 THEN amount ELSE 0 END) AS income, " +
             "SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) * -1 AS expense " +
             "FROM UserTransaction " +
             "WHERE UserTransaction.userId = :userId " +
-            "AND UserTransaction.date / (1000 * 60 * 60 * 24 * 365) BETWEEN (:date / (1000 * 60 * 60 * 24 * 365)) - (:date / (1000 * 60 * 60 * 24 * 365)) % 10 AND (:date / (1000 * 60 * 60 * 24 * 365)) + 9 - (:date / (1000 * 60 * 60 * 24 * 365)) % 10 " +
+            "AND UserTransaction.date / (1000 * 60 * 60 * 24 * 365) BETWEEN (:date / (1000 * 60 * 60 * 24 * 365)) - (:date / (1000 * 60 * 60 * 24 * 365)) % 10 AND (:date / (1000 * 60 * 60 * 24 * 365)) " +
             "GROUP BY year " +
             "ORDER BY year ASC")
     LiveData<List<YearlyAnalysis>> getDecadeIncomeAndExpenses(int userId, long date);
