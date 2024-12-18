@@ -17,16 +17,20 @@ ExpenseMate is an Android application designed to help users monitor, review, an
 
 ## Screenshots
 
-![Posnetek zaslona 2024-12-18 103240](https://github.com/user-attachments/assets/a52d3c20-8d47-44ad-942b-c20a6488f56c)
+<img src="https://github.com/user-attachments/assets/a52d3c20-8d47-44ad-942b-c20a6488f56c" width="450" /> 
+
 *Login interface for user authentication.*
 
-![Posnetek zaslona 2024-12-18 103620](https://github.com/user-attachments/assets/2b7140c6-9914-476a-b94c-b423d3756d08)
+<img src="https://github.com/user-attachments/assets/2b7140c6-9914-476a-b94c-b423d3756d08" width="450" /> 
+
 *Overview of income and expenses.*
 
-![Posnetek zaslona 2024-12-18 103637](https://github.com/user-attachments/assets/fe9ce535-4b34-4aaa-a2b1-3c1b1e997a25)
+<img src="https://github.com/user-attachments/assets/fe9ce535-4b34-4aaa-a2b1-3c1b1e997a25" width="450" /> 
+
 *Visual representation of spending patterns.*
 
-![Posnetek zaslona 2024-12-18 103650](https://github.com/user-attachments/assets/8ae158b8-ea07-4c4a-9c5b-13ee6807ecf9)
+<img src="https://github.com/user-attachments/assets/8ae158b8-ea07-4c4a-9c5b-13ee6807ecf9" width="450" />
+
 *Transaction history.*
 
 ## Acknowledgments
